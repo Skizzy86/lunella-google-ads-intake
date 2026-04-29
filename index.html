@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lunella Studio — Google Ads Campaign Intake</title>
+<link href="https://fonts.googleapis.com/css2?family=Saira:wght@300;400;500;600;700&family=Saira+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary:      #242834;
+    --primary-deep: #1a1e28;
+    --primary-mid:  #2e3444;
+    --primary-lite: #363d52;
+    --secondary:    #7d51fe;
+    --secondary-dim:#6340d4;
+    --accent:       #B6FF00;
+    --base:         #FFFFFF;
+    --text-mid:     #a8afc4;
+    --text-dim:     #5a6178;
+    --border:       #333848;
+    --error:        #ff5252;
+    --card-bg:      #2a3040;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--primary); color: var(--base); font-family: 'Saira', sans-serif; font-weight: 400; min-height: 100vh; overflow-x: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: linear-gradient(rgba(125,81,254,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(125,81,254,0.03) 1px, transparent 1px); background-size: 40px 40px; pointer-events: none; z-index: 0; }
+  header { background: var(--primary-deep); border-bottom: 1px solid var(--border); padding: 1.5rem 3rem; position: relative; z-index: 10; }
+  header::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--secondary), var(--accent), transparent); }
+  .header-inner { max-width: 880px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
+  .bbm-logo { display: flex; align-items: center; }
+  .bbm-logo img { height: 38px; width: auto; display: block; }
+  .header-badge { text-align: right; }
+  .badge-label { font-size: 0.58rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--secondary); font-weight: 600; margin-bottom: 0.15rem; }
+  .badge-title { font-family: 'Saira Condensed', sans-serif; font-size: 0.82rem; font-weight: 700; color: var(--text-mid); letter-spacing: 0.08em; text-transform: uppercase; }
+  .hero { background: var(--primary-deep); padding: 4rem 3rem 3.5rem; position: relative; z-index: 1; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -80px; right: -100px; width: 550px; height: 550px; background: radial-gradient(circle, rgba(125,81,254,0.1) 0%, transparent 70%); pointer-events: none; }
+  .hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); }
+  .hero-inner { max-width: 880px; margin: 0 auto; position: relative; }
+  .hero-tag { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(125,81,254,0.1); border: 1px solid rgba(125,81,254,0.3); padding: 0.3rem 0.85rem; border-radius: 2px; margin-bottom: 1.5rem; }
+  .hero-tag span { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--secondary); font-weight: 600; }
+  .hero-tag::before { content: ''; display: block; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: blink 2s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+  .hero h1 { font-family: 'Saira Condensed', sans-serif; font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 800; line-height: 1.0; text-transform: uppercase; color: var(--base); margin-bottom: 1.25rem; letter-spacing: 0.01em; }
+  .hero h1 .hi-accent { color: var(--accent); }
+  .hero h1 .hi-purple { color: var(--secondary); }
+  .hero-desc { font-size: 0.92rem; color: var(--text-mid); line-height: 1.75; max-width: 560px; font-weight: 300; margin-bottom: 1.5rem; }
+  .time-estimate { font-size: 0.72rem; color: var(--accent); font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 2rem; display: inline-flex; align-items: center; gap: 0.5rem; }
+  .time-estimate::before { content: '⏱'; font-size: 0.85rem; }
+  .progress-wrap { display: flex; align-items: center; gap: 1rem; max-width: 560px; }
+  .progress-track { flex: 1; height: 3px; background: var(--primary-lite); border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--secondary), var(--accent)); width: 0%; transition: width 0.5s cubic-bezier(0.4,0,0.2,1); border-radius: 3px; }
+  .progress-text { font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); min-width: 52px; text-align: right; font-weight: 500; }
+  main { max-width: 880px; margin: 0 auto; padding: 3rem 3rem 6rem; position: relative; z-index: 1; }
+  .form-section { margin-bottom: 2.75rem; opacity: 0; transform: translateY(16px); animation: riseIn 0.45s ease forwards; }
+  @keyframes riseIn { to { opacity:1; transform:translateY(0); } }
+  .form-section:nth-child(1){animation-delay:0.08s}
+  .form-section:nth-child(2){animation-delay:0.14s}
+  .form-section:nth-child(3){animation-delay:0.20s}
+  .form-section:nth-child(4){animation-delay:0.26s}
+  .form-section:nth-child(5){animation-delay:0.32s}
+  .form-section:nth-child(6){animation-delay:0.38s}
+  .form-section:nth-child(7){animation-delay:0.44s}
+  .section-head { display: flex; align-items: flex-start; gap: 1.25rem; padding: 1.25rem 1.5rem; background: var(--card-bg); border: 1px solid var(--border); border-left: 3px solid var(--secondary); border-radius: 3px; margin-bottom: 1.5rem; }
+  .section-num { font-family: 'Saira Condensed', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--secondary); line-height: 1; opacity: 0.55; min-width: 2.2rem; padding-top: 2px; }
+  .section-title { font-family: 'Saira Condensed', sans-serif; font-size: 1rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--base); margin-bottom: 0.25rem; }
+  .section-desc { font-size: 0.75rem; color: var(--text-mid); line-height: 1.6; font-weight: 300; }
+  .field { margin-bottom: 1.1rem; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  label { display: block; font-size: 0.63rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-mid); margin-bottom: 0.42rem; }
+  label .req { color: var(--accent); margin-left: 2px; }
+  label .hint { font-weight: 300; letter-spacing: 0.04em; text-transform: none; color: var(--text-dim); font-size: 0.62rem; margin-left: 0.4rem; }
+  input[type="text"], input[type="email"], input[type="tel"], input[type="url"], input[type="password"], textarea, select { width: 100%; background: var(--card-bg); border: 1px solid var(--border); color: var(--base); font-family: 'Saira', sans-serif; font-size: 0.875rem; font-weight: 400; padding: 0.78rem 1rem; outline: none; border-radius: 3px; transition: border-color 0.2s, background 0.2s, box-shadow 0.2s; appearance: none; -webkit-appearance: none; }
+  input::placeholder, textarea::placeholder { color: var(--text-dim); font-weight: 300; }
+  input:focus, textarea:focus, select:focus { border-color: var(--secondary); background: var(--primary-mid); box-shadow: 0 0 0 3px rgba(125,81,254,0.1); }
+  textarea { resize: vertical; min-height: 108px; line-height: 1.65; }
+  .select-wrap { position: relative; }
+  .select-wrap::after { content: '▾'; position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); color: var(--secondary); font-size: 0.75rem; pointer-events: none; }
+  select option { background: var(--primary-mid); color: var(--base); }
+  .repeater-item { background: var(--card-bg); border: 1px solid var(--border); border-radius: 3px; padding: 1.1rem 1.25rem; margin-bottom: 0.65rem; position: relative; transition: border-color 0.2s; }
+  .repeater-item:focus-within { border-color: rgba(125,81,254,0.35); }
+  .repeater-item input { margin-bottom: 0.55rem; font-size: 0.85rem; font-weight: 500; }
+  .repeater-item textarea { min-height: 70px; font-size: 0.82rem; }
+  .repeater-label { font-size: 0.57rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.32rem; display: block; font-weight: 600; }
+  .remove-btn { position: absolute; top: 0.82rem; right: 0.82rem; background: none; border: 1px solid var(--border); color: var(--text-dim); cursor: pointer; font-size: 0.88rem; line-height: 1; padding: 0.2rem 0.42rem; border-radius: 2px; transition: all 0.15s; }
+  .remove-btn:hover { color: var(--error); border-color: var(--error); background: rgba(255,82,82,0.07); }
+  .add-btn { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 700; color: var(--secondary); background: none; border: 1px solid rgba(125,81,254,0.3); padding: 0.5rem 1rem; cursor: pointer; font-family: 'Saira', sans-serif; border-radius: 3px; transition: all 0.18s; margin-top: 0.45rem; }
+  .add-btn:hover { border-color: var(--secondary); background: rgba(125,81,254,0.08); color: var(--base); }
+  .check-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(205px, 1fr)); gap: 0.45rem; }
+  .check-item { display: flex; align-items: center; gap: 0.6rem; cursor: pointer; padding: 0.6rem 0.85rem; border: 1px solid var(--border); background: var(--card-bg); border-radius: 3px; transition: all 0.15s; font-size: 0.78rem; color: var(--text-mid); user-select: none; }
+  .check-item:hover { border-color: rgba(125,81,254,0.35); color: var(--base); }
+  .check-item input[type="checkbox"] { width: 15px; height: 15px; accent-color: var(--secondary); cursor: pointer; flex-shrink: 0; padding: 0; min-width: unset; }
+  .check-item:has(input:checked) { border-color: var(--secondary); background: rgba(125,81,254,0.1); color: var(--base); }
+  .help-callout { background: rgba(125,81,254,0.06); border: 1px solid rgba(125,81,254,0.2); border-left: 3px solid var(--secondary); border-radius: 3px; padding: 0.85rem 1.1rem; margin-bottom: 1rem; font-size: 0.74rem; color: var(--text-mid); line-height: 1.6; }
+  .help-callout strong { color: var(--accent); font-weight: 600; }
+  .submit-section { margin-top: 3.5rem; padding-top: 2.5rem; border-top: 1px solid var(--border); position: relative; }
+  .submit-section::before { content: ''; position: absolute; top: -1px; left: 0; width: 120px; height: 2px; background: linear-gradient(90deg, var(--secondary), var(--accent)); }
+  .submit-note { font-size: 0.78rem; color: var(--text-mid); line-height: 1.75; margin-bottom: 1.75rem; max-width: 520px; font-weight: 300; }
+  .submit-note strong { color: var(--base); font-weight: 600; }
+  .submit-btn { display: inline-flex; align-items: center; gap: 1rem; background: var(--secondary); color: var(--base); border: none; padding: 1rem 2.5rem; font-family: 'Saira Condensed', sans-serif; font-size: 1rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; border-radius: 3px; transition: all 0.2s; }
+  .submit-btn:hover { background: var(--secondary-dim); transform: translateY(-2px); box-shadow: 0 10px 32px rgba(125,81,254,0.3); }
+  .submit-btn:active { transform: translateY(0); }
+  .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .btn-arrow { font-size: 1rem; transition: transform 0.2s; }
+  .submit-btn:hover .btn-arrow { transform: translateX(4px); }
+  .success-screen { display: none; text-align: center; padding: 6rem 2rem; }
+  .success-screen.visible { display: block; }
+  .success-ring { width: 72px; height: 72px; border: 2px solid var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; font-size: 1.6rem; color: var(--accent); animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1); box-shadow: 0 0 40px rgba(182,255,0,0.2); }
+  @keyframes popIn { from{transform:scale(0.3);opacity:0} to{transform:scale(1);opacity:1} }
+  .success-screen h2 { font-family: 'Saira Condensed', sans-serif; font-size: 2.2rem; font-weight: 800; text-transform: uppercase; color: var(--base); margin-bottom: 1rem; }
+  .success-screen p { color: var(--text-mid); font-size: 0.9rem; line-height: 1.75; font-weight: 300; max-width: 420px; margin: 0 auto; }
+  footer { background: var(--primary-deep); border-top: 1px solid var(--border); padding: 1.5rem 3rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.62rem; color: var(--text-dim); letter-spacing: 0.1em; text-transform: uppercase; position: relative; z-index: 1; }
+  footer::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, var(--secondary), transparent); opacity: 0.4; }
+  footer a { color: var(--accent); text-decoration: none; opacity: 0.75; transition: opacity 0.2s; }
+  footer a:hover { opacity: 1; }
+  .error-banner { display: none; background: rgba(255,82,82,0.1); border: 1px solid var(--error); color: var(--error); padding: 0.85rem 1.25rem; border-radius: 3px; font-size: 0.78rem; margin-bottom: 1.5rem; }
+  .error-banner.visible { display: block; }
+  @media (max-width: 680px) {
+    header, footer { padding: 1.25rem; }
+    .hero { padding: 2.5rem 1.25rem; }
+    main { padding: 2rem 1.25rem 5rem; }
+    .field-row { grid-template-columns: 1fr; }
+    .check-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="bbm-logo">
+      <img src="logo.png" alt="BlackBoxMedia">
+    </div>
+    <div class="header-badge">
+      <div class="badge-label">Client Onboarding</div>
+      <div class="badge-title">Google Ads Setup</div>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag"><span>Lunella Studio</span></div>
+    <h1>Google Ads<br><span class="hi-purple">Launch</span> <span class="hi-accent">Intake</span></h1>
+    <p class="hero-desc">Everything we need to launch your Google Ads campaigns &mdash; account access, goals, audience, and creative direction. The more accurate this is, the faster we can get tracking installed, campaigns built, and ads in front of the right people.</p>
+    <div class="time-estimate">Estimated time: 10–15 minutes</div>
+    <div class="progress-wrap">
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-text" id="progressLabel">0 / 7</div>
+    </div>
+  </div>
+</div>
+
+<main>
+  <!-- REPLACE YOUR_FORMSPREE_ID with your client-specific Formspree form ID -->
+  <form id="mainForm" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST">
+    <div class="error-banner" id="errorBanner">Something went wrong. Please try again or contact your project manager.</div>
+
+    <!-- 01 BUSINESS & BILLING -->
+    <div class="form-section">
+      <div class="section-head"><div class="section-num">01</div><div><div class="section-title">Business & Billing</div><div class="section-desc">The basics for invoicing and account setup.</div></div></div>
+      <div class="field-row">
+        <div class="field"><label>Legal Business Name <span class="req">*</span></label><input type="text" name="bizLegalName" placeholder="As it appears on invoices / registration" required></div>
+        <div class="field"><label>Trading Name <span class="hint">if different</span></label><input type="text" name="bizTradingName" placeholder="DBA / brand name customers know"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Industry / What you do <span class="req">*</span></label><input type="text" name="bizIndustry" placeholder="One line — e.g. Wedding photography, Custom millwork" required></div>
+        <div class="field"><label>Website URL <span class="req">*</span></label><input type="url" name="bizWebsite" placeholder="https://..." required></div>
+      </div>
+      <div class="field"><label>Business Address</label><input type="text" name="bizAddress" placeholder="Street, city, province, postal code"></div>
+      <div class="field-row">
+        <div class="field"><label>Billing Email <span class="req">*</span></label><input type="email" name="billingEmail" placeholder="Where invoices should be sent" required></div>
+        <div class="field"><label>GST/HST Number <span class="hint">if applicable</span></label><input type="text" name="bizGSTNumber" placeholder="9-digit business number"></div>
+      </div>
+    </div>
+
+    <!-- 02 PRIMARY CONTACT -->
+    <div class="form-section">
+      <div class="section-head"><div class="section-num">02</div><div><div class="section-title">Primary Contact</div><div class="section-desc">Who we'll be working with day-to-day.</div></div></div>
+      <div class="field-row">
+        <div class="field"><label>Full Name <span class="req">*</span></label><input type="text" name="contactName" placeholder="First and last name" required></div>
+        <div class="field"><label>Role / Title</label><input type="text" name="contactRole" placeholder="e.g. Owner, Marketing Manager"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Email <span class="req">*</span></label><input type="email" name="contactEmail" placeholder="you@example.com" required></div>
+        <div class="field"><label>Phone <span class="req">*</span></label><input type="tel" name="contactPhone" placeholder="+1 (780) 555-0100" required></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Best way to reach you</label><div class="select-wrap"><select name="contactPreferred"><option value="">Select…</option><option>Email</option><option>Phone</option><option>SMS / Text</option><option>Video call</option></select></div></div>
+        <div class="field"><label>Best hours to reach you</label><input type="text" name="contactHours" placeholder="e.g. Weekdays 9–5 MST"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Are you the decision-maker?</label><div class="select-wrap"><select name="isDecisionMaker"><option value="">Select…</option><option>Yes — I approve spend and strategy</option><option>No — someone else approves</option></select></div></div>
+        <div class="field"><label>Decision-maker name <span class="hint">if not you</span></label><input type="text" name="decisionMaker" placeholder="Name and role"></div>
+      </div>
+      <div class="field"><label>Anyone else to CC on reports?</label><input type="text" name="ccContacts" placeholder="Names + emails, separated by commas"></div>
+    </div>
+
+    <!-- 03 ACCOUNT ACCESS & CREDENTIALS -->
+    <div class="form-section">
+      <div class="section-head"><div class="section-num">03</div><div><div class="section-title">Account Access & Credentials</div><div class="section-desc">Logins for the accounts we'll need to launch your campaigns.</div></div></div>
+
+      <div class="help-callout">
+        <strong>Security note —</strong> This form submits over HTTPS to our private inbox. For Google Ads, Analytics, and Google Business Profile, we strongly prefer to send you a manager-access invitation rather than take your password — it's safer, you keep full control, and access can be revoked anytime. If you'd rather share credentials via 1Password, Bitwarden, or another password manager, email us instead and skip this section. Otherwise, fill in what you can below and flag whether 2FA is enabled so we can coordinate code delivery when needed.
+      </div>
+
+      <div class="field"><label>Preferred credential method</label>
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" name="credMethod" value="Send me access requests"> Send me access requests (preferred)</label>
+          <label class="check-item"><input type="checkbox" name="credMethod" value="Will share via password manager"> Share via password manager</label>
+          <label class="check-item"><input type="checkbox" name="credMethod" value="Filling in below"> Filling in fields below</label>
+        </div>
+      </div>
+
+      <!-- Google Account -->
+      <div class="repeater-item">
+        <span class="repeater-label">Google Account &mdash; Ads / Analytics / Tag Manager / Search Console</span>
+        <div class="field-row">
+          <div class="field"><label>Account email</label><input type="email" name="googleEmail" placeholder="account@gmail.com"></div>
+          <div class="field"><label>Password</label><input type="password" name="googlePassword" placeholder="Password"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>2FA status</label><div class="select-wrap"><select name="google2FA"><option value="">Select…</option><option>No 2FA enabled</option><option>SMS to phone</option><option>Authenticator app</option><option>Backup codes available</option><option>Account doesn't exist yet</option></select></div></div>
+          <div class="field"><label>2FA contact / notes</label><input type="text" name="googleNotes" placeholder="Phone for codes, recovery info, etc."></div>
+        </div>
+      </div>
+
+      <!-- Google Business Profile -->
+      <div class="repeater-item">
+        <span class="repeater-label">Google Business Profile (GMB)</span>
+        <div class="field-row">
+          <div class="field"><label>Account email <span class="hint">if different from above</span></label><input type="email" name="gmbEmail" placeholder="If same as Google account, leave blank"></div>
+          <div class="field"><label>Password</label><input type="password" name="gmbPassword" placeholder="Password"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>2FA status</label><div class="select-wrap"><select name="gmb2FA"><option value="">Select…</option><option>Same as Google account above</option><option>No 2FA enabled</option><option>SMS to phone</option><option>Authenticator app</option><option>Backup codes available</option><option>Profile not yet claimed</option></select></div></div>
+          <div class="field"><label>2FA contact / notes</label><input type="text" name="gmbNotes" placeholder="Phone for codes, recovery info, etc."></div>
+        </div>
+      </div>
+
+      <!-- Squarespace -->
+      <div class="repeater-item">
+        <span class="repeater-label">Squarespace &mdash; Website</span>
+        <div class="field-row">
+          <div class="field"><label>Account email</label><input type="email" name="squarespaceEmail" placeholder="account@example.com"></div>
+          <div class="field"><label>Password</label><input type="password" name="squarespacePassword" placeholder="Password"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>2FA status</label><div class="select-wrap"><select name="squarespace2FA"><option value="">Select…</option><option>No 2FA enabled</option><option>SMS to phone</option><option>Authenticator app</option><option>Backup codes available</option></select></div></div>
+          <div class="field"><label>2FA contact / notes</label><input type="text" name="squarespaceNotes" placeholder="Phone for codes, contributor invite preferred, etc."></div>
+        </div>
+      </div>
+
+      <!-- Facebook -->
+      <div class="repeater-item">
+        <span class="repeater-label">Facebook &mdash; personal login + Business Manager</span>
+        <div class="field-row">
+          <div class="field"><label>Account email or phone</label><input type="text" name="fbEmail" placeholder="Login email or phone number"></div>
+          <div class="field"><label>Password</label><input type="password" name="fbPassword" placeholder="Password"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>2FA status</label><div class="select-wrap"><select name="fb2FA"><option value="">Select…</option><option>No 2FA enabled</option><option>SMS to phone</option><option>Authenticator app</option><option>Backup codes available</option></select></div></div>
+          <div class="field"><label>Business Page name + 2FA notes</label><input type="text" name="fbNotes" placeholder="Page name, phone for codes, etc."></div>
+        </div>
+      </div>
+
+      <!-- Instagram -->
+      <div class="repeater-item">
+        <span class="repeater-label">Instagram</span>
+        <div class="field-row">
+          <div class="field"><label>Username / handle</label><input type="text" name="igHandle" placeholder="@yourhandle"></div>
+          <div class="field"><label>Password</label><input type="password" name="igPassword" placeholder="Password"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>2FA status</label><div class="select-wrap"><select name="ig2FA"><option value="">Select…</option><option>No 2FA enabled</option><option>SMS to phone</option><option>Authenticator app</option><option>Backup codes available</option><option>Linked through Facebook above</option></select></div></div>
+          <div class="field"><label>2FA contact / notes</label><input type="text" name="igNotes" placeholder="Phone for codes, recovery email, etc."></div>
+        </div>
+      </div>
+
+      <div class="field"><label>Other accounts we should have access to</label><textarea name="otherAccounts" placeholder="Domain registrar (GoDaddy, Namecheap), email host, CRM, anything else relevant. Include logins or note that you'll send via password manager."></textarea></div>
+    </div>
+
+    <!-- 04 CAMPAIGN GOALS -->
+    <div class="form-section">
+      <div class="section-head"><div class="section-num">04</div><div><div class="section-title">Campaign Goals</div><div class="section-desc">What success looks like and what we're optimizing for.</div></div></div>
+      <div class="field"><label>Primary goal of these campaigns <span class="req">*</span></label>
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" name="primaryGoal" value="Lead generation (form fills)"> Lead generation</label>
+          <label class="check-item"><input type="checkbox" name="primaryGoal" value="Phone calls"> Phone calls</label>
+          <label class="check-item"><input type="checkbox" name="primaryGoal" value="Online sales / e-commerce"> Online sales</label>
+          <label class="check-item"><input type="checkbox" name="primaryGoal" value="Bookings / appointments"> Bookings / appointments</label>
+          <label class="check-item"><input type="checkbox" name="primaryGoal" value="Foot traffic / store visits"> Store visits</label>
+          <label class="check-item"><input type="checkbox" name="primaryGoal" value="Brand awareness"> Brand awareness</label>
+        </div>
+      </div>
+      <div class="field"><label>What counts as a successful conversion? <span class="req">*</span></label><textarea name="conversionDefinition" placeholder="Be specific — e.g. 'Quote request form submitted' or 'Phone call lasting 60+ seconds' or 'Online booking completed'." required></textarea></div>
+      <div class="field-row">
+        <div class="field"><label>Monthly ad budget <span class="req">*</span></label><div class="select-wrap"><select name="monthlyBudget" required><option value="">Select…</option><option>Under $1,000/mo</option><option>$1,000 – $2,500/mo</option><option>$2,500 – $5,000/mo</option><option>$5,000 – $10,000/mo</option><option>$10,000 – $25,000/mo</option><option>$25,000+/mo</option><option>Need guidance on this</option></select></div></div>
+        <div class="field"><label>Launch urgency</label><div class="select-wrap"><select name="launchUrgency"><option value="">Select…</option><option>ASAP — within 1 week</option><option>2 weeks</option><option>1 month</option><option>Flexible</option></select></div></div>
+      </div>
+      <div class="field"><label>Geographic targeting <span class="req">*</span></label><textarea name="geoTargeting" placeholder="Cities, regions, radius from address, provinces, Canada-wide, etc." required></textarea></div>
+      <div class="field-row">
+        <div class="field"><label>Business hours <span class="hint">for ad scheduling</span></label><input type="text" name="businessHours" placeholder="e.g. Mon–Fri 8am–6pm, Sat 10–4"></div>
+        <div class="field"><label>Languages to target</label><input type="text" name="targetLanguages" placeholder="e.g. English, French"></div>
+      </div>
+      <div class="field"><label>Past Google Ads activity <span class="hint">if any</span></label><textarea name="pastAds" placeholder="Have you run Google Ads before? What worked, what didn't, and do you have access to past account data?"></textarea></div>
+    </div>
+
+    <!-- 05 OFFER & AUDIENCE -->
+    <div class="form-section">
+      <div class="section-head"><div class="section-num">05</div><div><div class="section-title">Offer & Audience</div><div class="section-desc">What you sell and who we should be reaching.</div></div></div>
+      <div class="field"><label>Products or services to advertise <span class="req">*</span></label><textarea name="offerings" placeholder="What we'll be running ads for. Include any current promotions, pricing, or unique selling points." required></textarea></div>
+      <div class="field"><label>Describe your ideal customer <span class="req">*</span></label><textarea name="idealCustomer" placeholder="Demographics, location, what they value, what triggers them to search for what you offer." required></textarea></div>
+      <div class="field"><label>Top 3 competitors <span class="hint">name + website</span></label><textarea name="competitors" placeholder="Helps us with auction insights, keyword research, and positioning."></textarea></div>
+      <div class="field"><label>Audiences to <em>exclude</em></label><textarea name="excludeAudiences" placeholder="Wrong region, job seekers, DIY-ers, existing customers — anyone we shouldn't be paying to reach."></textarea></div>
+    </div>
+
+    <!-- 06 BRAND & CREATIVE -->
+    <div class="form-section">
+      <div class="section-head"><div class="section-num">06</div><div><div class="section-title">Brand & Creative</div><div class="section-desc">Look, voice, and what's off-limits in ad copy.</div></div></div>
+      <div class="field"><label>Logo + brand assets <span class="hint">link</span></label><input type="url" name="assetsLink" placeholder="Google Drive, Dropbox, or shared folder URL"></div>
+      <div class="field-row">
+        <div class="field"><label>Brand colours <span class="hint">if known</span></label><input type="text" name="brandColours" placeholder="e.g. #1a1a1a, #ff6b35"></div>
+        <div class="field"><label>Brand fonts <span class="hint">if known</span></label><input type="text" name="brandFonts" placeholder="e.g. Inter, Playfair Display"></div>
+      </div>
+      <div class="field"><label>Tone of voice</label><textarea name="brandVoice" placeholder="e.g. Professional but warm. Confident, never pushy. We say 'craft' not 'create.'"></textarea></div>
+      <div class="field"><label>Things to avoid in ad copy</label><textarea name="copyAvoid" placeholder="Claims you can't make, comparison language, words you don't use, regulatory restrictions."></textarea></div>
+      <div class="field-row">
+        <div class="field"><label>Privacy Policy URL <span class="req">*</span></label><input type="url" name="privacyPolicy" placeholder="Required by Google Ads — https://..." required></div>
+        <div class="field"><label>Terms of Service URL <span class="hint">if applicable</span></label><input type="url" name="termsURL" placeholder="https://..."></div>
+      </div>
+    </div>
+
+    <!-- 07 REPORTING & FINAL NOTES -->
+    <div class="form-section">
+      <div class="section-head"><div class="section-num">07</div><div><div class="section-title">Reporting & Final Notes</div><div class="section-desc">How we'll keep you in the loop, plus authorization.</div></div></div>
+      <div class="field-row">
+        <div class="field"><label>Reporting cadence</label><div class="select-wrap"><select name="reportingCadence"><option value="">Select…</option><option>Weekly</option><option>Bi-weekly</option><option>Monthly</option><option>Live dashboard only</option></select></div></div>
+        <div class="field"><label>Ad approval process</label><div class="select-wrap"><select name="adApproval"><option value="">Select…</option><option>Review every ad before launch</option><option>Review key campaigns, trust BBM on iterations</option><option>Trust BBM — just keep me posted</option></select></div></div>
+      </div>
+      <div class="field"><label>Anything else we should know</label><textarea name="additionalNotes" placeholder="Concerns, deadlines, regulatory considerations, internal politics, anything that doesn't fit anywhere else." style="min-height:120px;"></textarea></div>
+      <div class="help-callout" style="margin-top: 1.5rem;">
+        <label class="check-item" style="border: none; background: none; padding: 0;">
+          <input type="checkbox" name="authorization" value="Yes" required>
+          <span><strong style="color: var(--base);">Authorization <span class="req">*</span></strong> — I authorize BlackBoxMedia to manage advertising accounts, access analytics, and run campaigns on my behalf for the agreed scope of work.</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="submit-section">
+      <p class="submit-note">Once submitted, we'll review everything and reach out within one business day to confirm next steps. <strong>If you flagged 2FA on any accounts, expect a coordination message before we attempt access.</strong> Welcome aboard.</p>
+      <button type="submit" class="submit-btn" id="submitBtn">Submit Questionnaire <span class="btn-arrow">→</span></button>
+    </div>
+  </form>
+
+  <div class="success-screen" id="successScreen">
+    <div class="success-ring">✓</div>
+    <h2>Received — Welcome Aboard</h2>
+    <p>We've got your details. Expect a coordination message within one business day to confirm next steps and walk through any access requests we need from you.</p>
+  </div>
+</main>
+
+<footer>
+  <span>© 2025 BlackBoxMedia — Design. Development. Marketing.</span>
+  <a href="https://blackboxmedia.ca" target="_blank">blackboxmedia.ca</a>
+</footer>
+
+<script>
+  function updateProgress() {
+    var sections = document.querySelectorAll('.form-section');
+    var filled = 0;
+    sections.forEach(function(s) {
+      var inputs = s.querySelectorAll('input:not([type="checkbox"]):not([type="radio"]), textarea, select');
+      var checks = s.querySelectorAll('input[type="checkbox"]:checked, input[type="radio"]:checked');
+      var has = checks.length > 0;
+      inputs.forEach(function(i) { if (i.value.trim()) has = true; });
+      if (has) filled++;
+    });
+    var pct = Math.round((filled / sections.length) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent = filled + ' / ' + sections.length;
+  }
+  document.querySelectorAll('input, textarea, select').forEach(function(el) {
+    el.addEventListener('input', updateProgress);
+    el.addEventListener('change', updateProgress);
+  });
+  updateProgress();
+
+  document.getElementById('mainForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var btn = document.getElementById('submitBtn');
+    btn.innerHTML = 'Submitting… <span class="btn-arrow">↻</span>';
+    btn.disabled = true;
+
+    var formData = new FormData(this);
+    fetch(this.action, {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    })
+    .then(function(response) {
+      if (response.ok) {
+        document.getElementById('mainForm').style.display = 'none';
+        document.getElementById('successScreen').classList.add('visible');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        document.getElementById('errorBanner').classList.add('visible');
+        btn.innerHTML = 'Submit Questionnaire <span class="btn-arrow">→</span>';
+        btn.disabled = false;
+      }
+    })
+    .catch(function() {
+      document.getElementById('errorBanner').classList.add('visible');
+      btn.innerHTML = 'Submit Questionnaire <span class="btn-arrow">→</span>';
+      btn.disabled = false;
+    });
+  });
+</script>
+</body>
+</html>
