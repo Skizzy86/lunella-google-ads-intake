@@ -197,17 +197,17 @@
 
     <!-- 03 ACCOUNT ACCESS & CREDENTIALS -->
     <div class="form-section">
-      <div class="section-head"><div class="section-num">03</div><div><div class="section-title">Account Access & Credentials</div><div class="section-desc">Logins for the accounts we'll need to launch your campaigns.</div></div></div>
+      <div class="section-head"><div class="section-num">03</div><div><div class="section-title">Account Access</div><div class="section-desc">Where to send manager / partner invitations for the accounts we'll need to launch your campaigns.</div></div></div>
 
       <div class="help-callout">
-        <strong>Security note —</strong> This form submits over HTTPS to our private inbox. For Google Ads, Analytics, and Google Business Profile, we strongly prefer to send you a manager-access invitation rather than take your password — it's safer, you keep full control, and access can be revoked anytime. If you'd rather share credentials via 1Password, Bitwarden, or another password manager, email us instead and skip this section. Otherwise, fill in what you can below and flag whether 2FA is enabled so we can coordinate code delivery when needed.
+        <strong>How we handle access —</strong> We never collect passwords through this form. For Google Ads, Analytics, Google Business Profile, Meta Business Manager, and Squarespace, we'll send you manager / partner invitations so you keep full control and can revoke access anytime. For anything that genuinely requires a password handoff, we'll coordinate a secure share separately (1Password, Bitwarden, or a one-time encrypted link). Below, just confirm the account email and 2FA status for each platform so we know how to reach you when the invite goes out.
       </div>
 
-      <div class="field"><label>Preferred credential method</label>
+      <div class="field"><label>Preferred handoff method</label>
         <div class="check-grid">
           <label class="check-item"><input type="checkbox" name="credMethod" value="Send me access requests"> Send me access requests (preferred)</label>
           <label class="check-item"><input type="checkbox" name="credMethod" value="Will share via password manager"> Share via password manager</label>
-          <label class="check-item"><input type="checkbox" name="credMethod" value="Filling in below"> Filling in fields below</label>
+          <label class="check-item"><input type="checkbox" name="credMethod" value="Will share via one-time encrypted link"> One-time encrypted link</label>
         </div>
       </div>
 
@@ -216,12 +216,9 @@
         <span class="repeater-label">Google Account &mdash; Ads / Analytics / Tag Manager / Search Console</span>
         <div class="field-row">
           <div class="field"><label>Account email</label><input type="email" name="googleEmail" placeholder="account@gmail.com"></div>
-          <div class="field"><label>Password</label><input type="password" name="googlePassword" placeholder="Password"></div>
-        </div>
-        <div class="field-row">
           <div class="field"><label>2FA status</label><div class="select-wrap"><select name="google2FA"><option value="">Select…</option><option>No 2FA enabled</option><option>SMS to phone</option><option>Authenticator app</option><option>Backup codes available</option><option>Account doesn't exist yet</option></select></div></div>
-          <div class="field"><label>2FA contact / notes</label><input type="text" name="googleNotes" placeholder="Phone for codes, recovery info, etc."></div>
         </div>
+        <div class="field"><label>2FA contact / notes</label><input type="text" name="googleNotes" placeholder="Phone for codes, recovery info, etc."></div>
       </div>
 
       <!-- Google Business Profile -->
@@ -229,12 +226,9 @@
         <span class="repeater-label">Google Business Profile (GMB)</span>
         <div class="field-row">
           <div class="field"><label>Account email <span class="hint">if different from above</span></label><input type="email" name="gmbEmail" placeholder="If same as Google account, leave blank"></div>
-          <div class="field"><label>Password</label><input type="password" name="gmbPassword" placeholder="Password"></div>
-        </div>
-        <div class="field-row">
           <div class="field"><label>2FA status</label><div class="select-wrap"><select name="gmb2FA"><option value="">Select…</option><option>Same as Google account above</option><option>No 2FA enabled</option><option>SMS to phone</option><option>Authenticator app</option><option>Backup codes available</option><option>Profile not yet claimed</option></select></div></div>
-          <div class="field"><label>2FA contact / notes</label><input type="text" name="gmbNotes" placeholder="Phone for codes, recovery info, etc."></div>
         </div>
+        <div class="field"><label>2FA contact / notes</label><input type="text" name="gmbNotes" placeholder="Phone for codes, recovery info, etc."></div>
       </div>
 
       <!-- Squarespace -->
@@ -242,12 +236,9 @@
         <span class="repeater-label">Squarespace &mdash; Website</span>
         <div class="field-row">
           <div class="field"><label>Account email</label><input type="email" name="squarespaceEmail" placeholder="account@example.com"></div>
-          <div class="field"><label>Password</label><input type="password" name="squarespacePassword" placeholder="Password"></div>
-        </div>
-        <div class="field-row">
           <div class="field"><label>2FA status</label><div class="select-wrap"><select name="squarespace2FA"><option value="">Select…</option><option>No 2FA enabled</option><option>SMS to phone</option><option>Authenticator app</option><option>Backup codes available</option></select></div></div>
-          <div class="field"><label>2FA contact / notes</label><input type="text" name="squarespaceNotes" placeholder="Phone for codes, contributor invite preferred, etc."></div>
         </div>
+        <div class="field"><label>2FA contact / notes</label><input type="text" name="squarespaceNotes" placeholder="Phone for codes, contributor invite preferred, etc."></div>
       </div>
 
       <!-- Facebook -->
@@ -255,12 +246,9 @@
         <span class="repeater-label">Facebook &mdash; personal login + Business Manager</span>
         <div class="field-row">
           <div class="field"><label>Account email or phone</label><input type="text" name="fbEmail" placeholder="Login email or phone number"></div>
-          <div class="field"><label>Password</label><input type="password" name="fbPassword" placeholder="Password"></div>
-        </div>
-        <div class="field-row">
           <div class="field"><label>2FA status</label><div class="select-wrap"><select name="fb2FA"><option value="">Select…</option><option>No 2FA enabled</option><option>SMS to phone</option><option>Authenticator app</option><option>Backup codes available</option></select></div></div>
-          <div class="field"><label>Business Page name + 2FA notes</label><input type="text" name="fbNotes" placeholder="Page name, phone for codes, etc."></div>
         </div>
+        <div class="field"><label>Business Page name + 2FA notes</label><input type="text" name="fbNotes" placeholder="Page name, phone for codes, etc."></div>
       </div>
 
       <!-- Instagram -->
@@ -268,15 +256,12 @@
         <span class="repeater-label">Instagram</span>
         <div class="field-row">
           <div class="field"><label>Username / handle</label><input type="text" name="igHandle" placeholder="@yourhandle"></div>
-          <div class="field"><label>Password</label><input type="password" name="igPassword" placeholder="Password"></div>
-        </div>
-        <div class="field-row">
           <div class="field"><label>2FA status</label><div class="select-wrap"><select name="ig2FA"><option value="">Select…</option><option>No 2FA enabled</option><option>SMS to phone</option><option>Authenticator app</option><option>Backup codes available</option><option>Linked through Facebook above</option></select></div></div>
-          <div class="field"><label>2FA contact / notes</label><input type="text" name="igNotes" placeholder="Phone for codes, recovery email, etc."></div>
         </div>
+        <div class="field"><label>2FA contact / notes</label><input type="text" name="igNotes" placeholder="Phone for codes, recovery email, etc."></div>
       </div>
 
-      <div class="field"><label>Other accounts we should have access to</label><textarea name="otherAccounts" placeholder="Domain registrar (GoDaddy, Namecheap), email host, CRM, anything else relevant. Include logins or note that you'll send via password manager."></textarea></div>
+      <div class="field"><label>Other accounts we should have access to</label><textarea name="otherAccounts" placeholder="Domain registrar (GoDaddy, Namecheap), email host, CRM, anything else relevant. Just list the platforms — we'll coordinate access separately."></textarea></div>
     </div>
 
     <!-- 04 CAMPAIGN GOALS -->
@@ -347,7 +332,7 @@
     </div>
 
     <div class="submit-section">
-      <p class="submit-note">Once submitted, we'll review everything and reach out within one business day to confirm next steps. <strong>If you flagged 2FA on any accounts, expect a coordination message before we attempt access.</strong> Welcome aboard.</p>
+      <p class="submit-note">Once submitted, we'll review everything and reach out within one business day to confirm next steps. <strong>You'll receive manager-access invitations for each platform — accept them at your convenience and we're good to go.</strong> Welcome aboard.</p>
       <button type="submit" class="submit-btn" id="submitBtn">Submit Questionnaire <span class="btn-arrow">→</span></button>
     </div>
   </form>
